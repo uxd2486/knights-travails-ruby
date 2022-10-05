@@ -11,4 +11,11 @@ class Node
     @square = square
     @neighbours = []
   end
+
+  def ==(other)
+    super || (
+      self.class == other.class &&
+        @square == other.square
+    )
+  end
 end
