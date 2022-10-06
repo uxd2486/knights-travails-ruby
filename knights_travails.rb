@@ -2,37 +2,11 @@
 
 require_relative 'node'
 
-TRANSFORMATIONS = [
-  [+ 2,  + 1],
-  [+ 2,  - 1],
-  [- 2,  + 1],
-  [- 2,  - 1],
-  [+ 1,  + 2],
-  [+ 1,  - 2],
-  [- 1,  + 2],
-  [- 1,  - 2]
-].freeze
-
-def possible_moves(square)
-  row = square[0]
-  col = square[1]
-  TRANSFORMATIONS.map { |row_tr, col_tr| [row + row_tr, col + col_tr] }
-                 .select { |move| valid_move?(move) }
-end
-
-def valid_move?(move)
-  (move[0]).between?(0, 7) && (move[1]).between?(0, 7)
-end
-
 def find_end(start, stop)
   queue = [Node.new(start, nil)]
   cur_node = queue.shift
   until cur_node.square == stop
-    possible_moves(cur_node.square).each do |move|
-      new_node = Node.new(move, cur_node)
-      queue << new_node
-      cur_node.neighbours << new_node
-    end
+    cur_node.find_neighbours.each { |new_node| queue << new_node }
     cur_node = queue.shift
   end
   cur_node
