@@ -2,7 +2,7 @@
 
 require_relative 'node'
 
-def find_end(start, stop)
+def find_stop(start, stop)
   queue = [Node.new(start, nil)]
   cur_node = queue.shift
   until cur_node.square == stop
@@ -22,7 +22,7 @@ def build_path(stop, start)
 end
 
 def knight_moves(start, stop)
-  stop_location = find_end(start, stop)
+  stop_location = find_stop(start, stop)
   build_path(stop_location, start).reverse
 end
 

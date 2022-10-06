@@ -5,27 +5,25 @@
 # make. One node (or vertex) represents
 # one square on the chess board.
 class Node
-  attr_accessor :square, :neighbours, :parent
-
-  @@transformations = [
-    [+ 2,  + 1],
-    [+ 2,  - 1],
-    [- 2,  + 1],
-    [- 2,  - 1],
-    [+ 1,  + 2],
-    [+ 1,  - 2],
-    [- 1,  + 2],
-    [- 1,  - 2]
-  ].freeze
+  attr_accessor :square, :parent
 
   def initialize(square, parent)
     @square = square
-    @neighbours = []
     @parent = parent
+    @transformations = [
+      [+ 2,  + 1],
+      [+ 2,  - 1],
+      [- 2,  + 1],
+      [- 2,  - 1],
+      [+ 1,  + 2],
+      [+ 1,  - 2],
+      [- 1,  + 2],
+      [- 1,  - 2]
+    ].freeze
   end
 
   def find_neighbours
-    @neighbours = possible_moves
+    possible_moves
   end
 
   def to_s
@@ -44,9 +42,9 @@ class Node
   def possible_moves
     row = @square[0]
     col = @square[1]
-    @@transformations.map { |row_tr, col_tr| [row + row_tr, col + col_tr] }
-                     .select { |move| valid_move?(move) }
-                     .map { |move| Node.new(move, self) }
+    @transformations.map { |row_tr, col_tr| [row + row_tr, col + col_tr] }
+                    .select { |move| valid_move?(move) }
+                    .map { |move| Node.new(move, self) }
   end
 
   def valid_move?(move)
