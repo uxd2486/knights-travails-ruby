@@ -19,7 +19,7 @@ def possible_moves(square)
 end
 
 def valid_move?(move)
-  (move[0]).positive? && move[0] < BOARD_SIZE && (move[1]).positive? && move[1] < BOARD_SIZE
+  (move[0]).between?(0, 7) && (move[1]).between?(0, 7)
 end
 
 def knight_moves(start, stop)
